@@ -1,25 +1,35 @@
+# This is the basic workflow for starting GitHub actions
+
 name: Bootcampsample-1
 
+#controls when action will run by push or pull request
+#only for branch master
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+
+# In wrokflow jobs can be sequentially or in parallel
 
 jobs:
+  # This workflow contain a sigle job which is "build"
   build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Installling Node
-      uses: actions/setup-node@v2-beta
-      with:
-        key:  node-version 12
-    - name: Installing the surge
-       run:npm install --global surge
-    - name: deploying using the surge 
-      run: surge  ./ bootcampsample-1.surge.sh --token ${{secrets.Surge_Token}}
+  # type of runner on which job run
+   runs-on: ubuntu-latest
+   # steps are sequence of tasks that will be executed as part of job
+   steps:
+   # checks-outs your repository under $GITHUB_WORKSPACE , so your job can acess it
+   - uses: actions/checkout@v2
+     
+   # Run a single command using runners shell
+   - name: Installling Node
+     uses: actions/setup-node@v2-beta
+     with:
+       node-version: 12
+        
+   # Run a set of commands using runners shell   
+   - name: Installing the surge
+     run: npm install --global surge
+   - name: deploying using the surge 
+     run: surge  ./ bootcampsample-1.surge.sh --token ${{secrets.Surge_Token}}
       
 
