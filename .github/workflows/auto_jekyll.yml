@@ -1,0 +1,25 @@
+name: Bootcampsample-1
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Installling Node
+      uses: actions/setup-node@v2-beta
+      with:
+        key:  node-version 12
+    - name: Installing the surge
+       run:npm install --global surge
+    - name: deploying using the surge 
+      run: surge  ./ bootcampsample-1.surge.sh --token ${{secrets.Surge_Token}}
+      
+
